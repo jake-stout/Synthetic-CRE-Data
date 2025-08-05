@@ -39,10 +39,22 @@ if "property_id" not in properties_df.columns:
 
 # ------------ Simulate Users ------------
 def generate_user(count=None):
+    """Return a DataFrame of fake user records.
+
+    Args:
+        count (int, optional): Number of users to generate. If omitted a
+            random number between 5 and 10 is used.
+
+    Raises:
+        ValueError: If ``count`` is negative.
+    """
+
     if count is None:
         count = random.randint(5, 10)
+    elif count < 0:
+        raise ValueError("count must be non-negative")
 
-    user = []
+    users = []
 
     def generate_unique_user_ids(count, id_length=6):
         user_ids = set()
@@ -52,20 +64,23 @@ def generate_user(count=None):
             user_ids.add(padded_id)
         return list(user_ids)
 
-    # Generate unique user_ids once
     user_ids = generate_unique_user_ids(count)
 
     for i in range(count):
-        user.append({
-            "id": uid(),
-            "user_id": user_ids[i],
-            "user_name": fake.name()
-        })
+        users.append(
+            {
+                "id": uid(),
+                "user_id": user_ids[i],
+                "user_name": fake.name(),
+            }
+        )
 
-    return pd.DataFrame(user)
+    return pd.DataFrame(users)
 
 # ------------ Simulate Vendors ------------
-def generate_vendors(coa, user, num_vendors):  # Make vendor count configurable
+def generate_vendors(user, num_vendors):  # Make vendor count configurable
+    """Generate synthetic vendor records."""
+
     vendor_categories = [
         ("Legal & Regulatory Counsel", ["LLP", "Law Group", "Counsel"], 0.08),
         ("Real Estate Appraisers", ["Realty Advisors", "Appraisal Services"], 0.05),
@@ -504,6 +519,12 @@ def generate_rentroll(properties_df, leases_df):
 """
 
 def generate_lease_pymnt_sched(leases_df, months_out):
+    """Create a payment schedule for each lease.
+
+    Handles annual rent escalations and optional proration of the first
+    month's rent.
+    """
+
     schedule = []
 
     for _, lease in leases_df.iterrows():
@@ -518,13 +539,19 @@ def generate_lease_pymnt_sched(leases_df, months_out):
 
         monthly_rent = lease.get("monthly_rent", 10000)
         escalation_type = lease.get("escalation_type")
-        escalation_rate = lease.get("escalation_rate", 0.03 if escalation_type == "Fixed %" else 0)
+        escalation_rate = lease.get(
+            "escalation_rate", 0.03 if escalation_type == "Fixed %" else 0
+        )
         pay_in_advance = lease.get("payment_timing", "In Advance") == "In Advance"
         free_rent_months = lease.get("free_rent_months", 0)
         pro_rated_start = lease.get("pro_rated_start", False)
 
         first_bill_month = rent_start.replace(day=1)
-        lease_term_months = (lease_end.year - first_bill_month.year) * 12 + (lease_end.month - first_bill_month.month)
+        lease_term_months = (lease_end.year - first_bill_month.year) * 12 + (
+            lease_end.month - first_bill_month.month
+        )
+
+        current_rent = monthly_rent
 
         for i in range(min(months_out, lease_term_months + 1)):
             bill_month = first_bill_month + relativedelta(months=i)
@@ -535,25 +562,33 @@ def generate_lease_pymnt_sched(leases_df, months_out):
             if i < free_rent_months:
                 continue
 
-            # Escalation logic
-            if escalation_type == "Fixed %" and i >= 12:
-                effective_rent = round(monthly_rent * (1 + escalation_rate))
-            elif escalation_type == "CPI" and i >= 12:
-                cpi = random.uniform(1.01, 1.04)
-                effective_rent = round(monthly_rent * cpi)
-            else:
-                effective_rent = monthly_rent
+            # Escalate rent annually
+            if i > 0 and i % 12 == 0:
+                if escalation_type == "Fixed %":
+                    current_rent = round(current_rent * (1 + escalation_rate))
+                elif escalation_type == "CPI":
+                    current_rent = round(
+                        current_rent * random.uniform(1.01, 1.04)
+                    )
+
+            effective_rent = current_rent
 
             # Proration only for the first month
             is_prorated = False
             if i == 0 and pro_rated_start:
-                days_in_month = calendar.monthrange(lease_start.year, lease_start.month)[1]
-                proration_factor = (days_in_month - lease_start.day + 1) / days_in_month
+                days_in_month = calendar.monthrange(
+                    lease_start.year, lease_start.month
+                )[1]
+                proration_factor = (
+                    days_in_month - lease_start.day + 1
+                ) / days_in_month
                 effective_rent = round(effective_rent * proration_factor, 2)
                 is_prorated = True
 
             # Billing date logic
-            bill_date = bill_month if pay_in_advance else bill_month + relativedelta(months=1)
+            bill_date = (
+                bill_month if pay_in_advance else bill_month + relativedelta(months=1)
+            )
 
             schedule.append({
                 "id": uid(),
@@ -634,6 +669,15 @@ def generate_cust_invoices(payment_schedule, leases, tenants):
 
 # ------------ Simulate Vendor Invoices ------------
 def generate_vendor_invoices(vendors, properties_df, leases, coa, min_invoices, max_invoices):
+    """Generate vendor invoices for each property.
+
+    Each property receives a random number of invoices between ``min_invoices``
+    and ``max_invoices``. Previously the property associated with an invoice
+    could be reassigned inside the loop, which led to some properties receiving
+    no invoices at all. The sampling now consistently uses the outer loop's
+    property.
+    """
+
     vend_invoices = []
 
     vendor_gl_mapping = {
@@ -662,10 +706,7 @@ def generate_vendor_invoices(vendors, properties_df, leases, coa, min_invoices, 
         num_invoices = random.randint(min_invoices, max_invoices)
 
         for _ in range(num_invoices):
-            
             vendor_row = vendors.sample(1).iloc[0]
-            property_row = properties_df.sample(1).iloc[0]
-
             vendor_category = vendor_row["service_type"]
             gls, gl_weights = vendor_gl_mapping.get(vendor_category, ([], []))
             chosen_gl = random.choices(gls, weights=gl_weights, k=1)[0] if gls else None
@@ -960,7 +1001,7 @@ def generate_reconciliations(properties, bank_accounts):
 # ------------ Run All ------------
 def generate_all():
     user = generate_user()
-    vendors = generate_vendors(coa_df, user, num_vendors=60)
+    vendors = generate_vendors(user, num_vendors=60)
     units = generate_units(properties_df)
     tenants = generate_tenants(properties_df, units)
     leases = generate_leases(properties_df, tenants, units)

@@ -32,6 +32,7 @@ def test_generate_vendor_invoices_count():
     ])
     inv = module.generate_vendor_invoices(vendors, properties, leases, module.coa_df, 1, 1)
     assert len(inv) == len(properties)
+    assert set(inv["property_id"]) == set(properties["property_id"])
 
 
 def test_generate_cust_invoices_matches_schedule():
