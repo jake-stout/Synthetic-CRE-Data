@@ -1,0 +1,84 @@
+version: "3.8"
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - cashsight-net
+    volumes:
+      - zookeeper-data:/var/lib/zookeeper/data
+
+  kafka:
+    image: confluentinc/cp-kafka:7.3.0
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - cashsight-net
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+
+  cre-db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+    ports:
+      - "5432:5432"
+    networks:
+      - cashsight-net
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  jobmanager:
+    image: flink:1.17.1-scala_2.12-java11
+    command: jobmanager
+    ports:
+      - "8081:8081"
+    environment:
+      - |
+        FLINK_PROPERTIES=jobmanager.rpc.address: jobmanager
+    networks:
+      - cashsight-net
+
+  taskmanager:
+    image: flink:1.17.1-scala_2.12-java11
+    depends_on:
+      - jobmanager
+    command: taskmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=jobmanager.rpc.address: jobmanager
+    networks:
+      - cashsight-net
+
+  api:
+    image: tiangolo/uvicorn-gunicorn-fastapi:python3.10
+    volumes:
+      - ./api:/app
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@cre-db:5432/${POSTGRES_DB:-postgres}
+    ports:
+      - "8000:80"
+    depends_on:
+      - cre-db
+    networks:
+      - cashsight-net
+
+networks:
+  cashsight-net:
+
+volumes:
+  pgdata:
+  kafka-data:
+  zookeeper-data:
