@@ -1,6 +1,7 @@
 import importlib.util
 import pandas as pd
 from pathlib import Path
+import pytest
 
 
 def load_module():
@@ -23,4 +24,10 @@ def test_generate_user_default_count_range():
     df = module.generate_user()
     assert 5 <= len(df) <= 10
     assert df['user_id'].is_unique
+
+
+def test_generate_user_negative_count():
+    module = load_module()
+    with pytest.raises(ValueError):
+        module.generate_user(count=-5)
 

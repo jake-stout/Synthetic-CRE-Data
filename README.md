@@ -42,7 +42,7 @@ python cashsight/db/init_fake_db.py
 
 This will create `data/fake_cashsight.db` populated with the sample CSV data.
 
-### Run Postgres with Docker
+### Run PostgreSQL with Docker
 
 To spin up a local PostgreSQL instance and pgAdmin using Docker Compose, first
 update the connection settings in `.env` if needed. Then start the services:

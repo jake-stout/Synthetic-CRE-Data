@@ -24,7 +24,7 @@ def main():
     os.makedirs(hist_dir, exist_ok=True)
 
     user = generate_user()
-    vendors = generate_vendors(coa_df, user, num_vendors=60)
+    vendors = generate_vendors(user, num_vendors=60)
     units = generate_units(properties_df)
     tenants = generate_tenants(properties_df, units)
     leases = generate_leases(properties_df, tenants, units)
