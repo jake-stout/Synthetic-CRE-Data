@@ -1,0 +1,99 @@
+,acct_number,acct_name,acct_type,normal_balance,fin_stmt,is_cash_acct,is_reserve_acct,sub_group
+0,10000.0,Cash - Operating Account,Asset,Debit,Balance Sheet,True,False,
+1,10010.0,Cash - Reserve Account,Asset,Debit,Balance Sheet,True,True,
+2,10020.0,Accounts Receivable - Tenants,Asset,Debit,Balance Sheet,False,False,
+3,10030.0,Prepaid Expenses,Asset,Debit,Balance Sheet,False,False,
+4,10040.0,Security Deposits Held,Asset,Debit,Balance Sheet,False,False,
+38,10100.0,Cash - Security Deposits,Asset,Debit,Balance Sheet,True,False,
+5,10100.0,Land,Asset,Debit,Balance Sheet,False,False,
+6,10110.0,Buildings,Asset,Debit,Balance Sheet,False,False,
+39,10110.0,Restricted Cash - Lender Reserves,Asset,Debit,Balance Sheet,True,True,
+7,10120.0,Building Improvements,Asset,Debit,Balance Sheet,False,False,
+8,10130.0,Land Improvements,Asset,Debit,Balance Sheet,False,False,
+9,10140.0,"Furniture, Fixtures & Equipment (FF&E)",Asset,Debit,Balance Sheet,False,False,
+10,10150.0,Accumulated Depreciation,Asset,Credit,Balance Sheet,False,False,
+40,20000.0,Accounts Payable - Vendors,Liability,Credit,Balance Sheet,False,False,
+11,20000.0,Accounts Payable,Liability,Credit,Balance Sheet,False,False,
+12,20010.0,Accrued Expenses,Liability,Credit,Balance Sheet,False,False,
+13,20020.0,Mortgages Payable,Liability,Credit,Balance Sheet,False,False,
+41,20020.0,Tenant Prepayments,Liability,Credit,Balance Sheet,False,False,
+14,20030.0,Property Taxes Payable,Liability,Credit,Balance Sheet,False,False,
+15,20040.0,Security Deposits Payable,Liability,Credit,Balance Sheet,False,False,
+16,20050.0,Unearned Rent Income,Liability,Credit,Balance Sheet,False,False,
+17,30000.0,Owner's Equity / Capital Contribution,Equity,Credit,Balance Sheet,False,False,
+18,30010.0,Retained Earnings,Equity,Credit,Balance Sheet,False,False,
+19,30020.0,Distributions / Draws,Equity,Debit,Balance Sheet,False,False,
+20,40000.0,Rental Income,Revenue,Credit,P&L,False,False,
+21,40010.0,CAM Reimbursements,Revenue,Credit,P&L,False,False,
+42,40010.0,Tenant Reimbursements,Revenue,Credit,P&L,False,False,
+43,40020.0,Late Fee Income,Revenue,Credit,P&L,False,False,
+22,40020.0,Parking Income,Revenue,Credit,P&L,False,False,
+23,40030.0,Vending / Other Miscellaneous Income,Revenue,Credit,P&L,False,False,
+24,40040.0,Lease Termination Fees,Revenue,Credit,P&L,False,False,
+44,50000.0,Repairs and Maintenance,Expense,Debit,P&L,False,False,
+25,50000.0,Property Taxes,Expense,Debit,P&L,False,False,
+53,50001.0,Broker Fees,Expense,Debit,Income Statement,False,False,Leasing Brokers & Tenant Reps
+73,50002.0,Facility Management,Expense,Debit,Income Statement,False,False,Maintenance & Janitorial Vendors
+76,50003.0,Grounds Maintenance,Expense,Debit,Income Statement,False,False,Maintenance & Janitorial Vendors
+80,50004.0,Leasing Commissions,Expense,Debit,Income Statement,False,False,Leasing Brokers & Tenant Reps
+82,50005.0,Maintenance & Repairs,Expense,Debit,Income Statement,False,False,Maintenance & Janitorial Vendors
+88,50006.0,Project Management Fees,Expense,Debit,Income Statement,False,False,Construction Managers
+90,50007.0,Surveillance Monitoring,Expense,Debit,Income Statement,False,False,Security & Surveillance Providers
+95,50008.0,Tenant Acquisition Costs,Expense,Debit,Income Statement,False,False,Leasing Brokers & Tenant Reps
+26,50010.0,Insurance,Expense,Debit,P&L,False,False,
+27,50020.0,Property Management Fees,Expense,Debit,P&L,False,False,
+28,50030.0,Utilities,Expense,Debit,P&L,False,False,
+45,50040.0,Real Estate Taxes,Expense,Debit,P&L,False,False,
+29,50040.0,Repairs & Maintenance,Expense,Debit,P&L,False,False,
+30,50050.0,Landscaping & Grounds,Expense,Debit,P&L,False,False,
+46,50060.0,Landscaping,Expense,Debit,P&L,False,False,
+31,50060.0,Janitorial Services,Expense,Debit,P&L,False,False,
+47,50070.0,Security Services,Expense,Debit,P&L,False,False,
+32,50070.0,Legal & Professional Fees,Expense,Debit,P&L,False,False,
+33,50080.0,Marketing & Advertising,Expense,Debit,P&L,False,False,
+34,50090.0,Office Supplies & Admin,Expense,Debit,P&L,False,False,
+35,50100.0,Bank Fees,Expense,Debit,P&L,False,False,
+36,50110.0,Interest Expense,Expense,Debit,P&L,False,False,
+37,50120.0,Depreciation Expense,Expense,Debit,P&L,False,False,
+48,51000.0,Capital Improvements,Expense,Debit,P&L,False,False,
+49,60000.0,Accounting Fees,Expense,Debit,Income Statement,False,False,Financial & Tax Advisors
+50,60001.0,Appraisal Fees,Expense,Debit,Income Statement,False,False,Real Estate Appraisers
+51,60002.0,Architectural Fees,Expense,Debit,Income Statement,False,False,Architecture & Design Firms
+52,60003.0,Asset Management,Expense,Debit,Income Statement,False,False,Property Management Firms
+54,60004.0,Building Operations,Expense,Debit,Income Statement,False,False,General Contractors
+55,60005.0,Building Repairs,Expense,Debit,Income Statement,False,False,General Contractors
+56,60006.0,Capital Projects,Expense,Debit,Income Statement,False,False,General Contractors
+57,60007.0,Closing Costs,Expense,Debit,Income Statement,False,False,Title & Escrow Services
+58,60008.0,Communications Expense,Expense,Debit,Income Statement,False,False,Investor Relations Platforms
+59,60009.0,Compliance Services,Expense,Debit,Income Statement,False,False,Legal & Regulatory Counsel
+60,60010.0,Construction Costs,Expense,Debit,Income Statement,False,False,General Contractors
+61,60011.0,Construction Management,Expense,Debit,Income Statement,False,False,General Contractors
+62,60012.0,Consulting Services,Expense,Debit,Income Statement,False,False,Market Research & Analytics
+63,60013.0,Data Subscriptions,Expense,Debit,Income Statement,False,False,Market Research & Analytics
+64,60014.0,Design Consulting,Expense,Debit,Income Statement,False,False,Market Research & Analytics
+65,60015.0,Due Diligence Costs,Expense,Debit,Income Statement,False,False,Real Estate Appraisers
+66,60016.0,ESG Strategy Services,Expense,Debit,Income Statement,False,False,ESG & Sustainability Consultants
+67,60017.0,Engineering Fees,Expense,Debit,Income Statement,False,False,Engineering Services (MEP/Civil)
+68,60018.0,Entitlement Costs,Expense,Debit,Income Statement,False,False,Title & Escrow Services
+69,60019.0,Environmental Remediation,Expense,Debit,Income Statement,False,False,Environmental Consultants
+70,60020.0,Environmental Studies,Expense,Debit,Income Statement,False,False,Environmental Consultants
+71,60021.0,Escrow Charges,Expense,Debit,Income Statement,False,False,Title & Escrow Services
+72,60022.0,Exterior Services,Expense,Debit,Income Statement,False,False,Landscaping & Outdoor Services
+74,60023.0,Financial Consulting,Expense,Debit,Income Statement,False,False,Financial & Tax Advisors
+75,60024.0,Green Building Expense,Expense,Debit,Income Statement,False,False,General Contractors
+77,60025.0,IT Services,Expense,Debit,Income Statement,False,False,"Software Providers (Yardi, VTS)"
+78,60026.0,Infrastructure Consulting,Expense,Debit,Income Statement,False,False,Market Research & Analytics
+79,60027.0,Investor Relations,Expense,Debit,Income Statement,False,False,Investor Relations Platforms
+81,60028.0,Legal Fees,Expense,Debit,Income Statement,False,False,Legal & Regulatory Counsel
+83,60029.0,Market Research,Expense,Debit,Income Statement,False,False,Market Research & Analytics
+84,60030.0,Onsite Services,Expense,Debit,Income Statement,False,False,Property Management Firms
+85,60031.0,Permitting Fees,Expense,Debit,Income Statement,False,False,Zoning & Permitting Consultants
+86,60032.0,Predevelopment Costs,Expense,Debit,Income Statement,False,False,Other Vendor Costs
+87,60033.0,Professional Services,Expense,Debit,Income Statement,False,False,Legal & Regulatory Counsel
+89,60034.0,Software Subscriptions,Expense,Debit,Income Statement,False,False,"Software Providers (Yardi, VTS)"
+91,60035.0,Sustainability Consulting,Expense,Debit,Income Statement,False,False,Market Research & Analytics
+92,60036.0,Tax Preparation Fees,Expense,Debit,Income Statement,False,False,Financial & Tax Advisors
+93,60037.0,Technology Expense,Expense,Debit,Income Statement,False,False,"Software Providers (Yardi, VTS)"
+94,60038.0,Technology Services,Expense,Debit,Income Statement,False,False,"Software Providers (Yardi, VTS)"
+96,60039.0,Title Fees,Expense,Debit,Income Statement,False,False,Title & Escrow Services
+97,60040.0,Zoning Consulting,Expense,Debit,Income Statement,False,False,Market Research & Analytics

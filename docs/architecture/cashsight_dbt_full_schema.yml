@@ -1,0 +1,342 @@
+version: 1
+
+models:
+
+  # ---------------- YARDI ----------------
+  - name: dim_property
+    description: Property master data from Yardi
+    columns:
+      - name: property_id
+        description: Primary key
+      - name: name
+        description: Property name
+      - name: address
+        description: Property address
+      - name: legal_entity
+        description: Owning legal entity
+      - name: market
+        description: Geographic market
+      - name: property_type
+        description: Property type (e.g., multifamily, office)
+
+  - name: dim_unit
+    description: Property units from Yardi
+    columns:
+      - name: unit_id
+        description: Primary key
+      - name: property_id
+        description: Foreign key to dim_property
+      - name: unit_number
+        description: Unit identifier
+      - name: floorplan
+        description: Unit type (studio, 1BR, etc.)
+      - name: rent_amount
+        description: Listed rent
+
+  - name: dim_lease
+    description: Lease agreements from Yardi
+    columns:
+      - name: lease_id
+        description: Primary key
+      - name: property_id
+        description: Foreign key to dim_property
+      - name: unit_id
+        description: Foreign key to dim_unit
+      - name: start_date
+        description: Lease start date
+      - name: end_date
+        description: Lease end date
+      - name: monthly_rent
+        description: Monthly rent amount
+      - name: security_deposit
+        description: Lease deposit amount
+
+  - name: dim_tenant
+    description: Tenant records from Yardi
+    columns:
+      - name: tenant_id
+        description: Primary key
+      - name: name
+        description: Tenant name
+      - name: unit_id
+        description: Foreign key to dim_unit
+      - name: credit_score
+        description: Credit score
+      - name: contact_email
+        description: Email address
+      - name: lease_status
+        description: Lease status (active, delinquent, etc.)
+
+  - name: fact_ar_transactions
+    description: Accounts receivable transactions from Yardi
+    columns:
+      - name: artran_id
+        description: Primary key
+      - name: lease_id
+        description: Foreign key to dim_lease
+      - name: charge_type
+        description: Type of charge (rent, fee)
+      - name: amount
+        description: Transaction amount
+      - name: date
+        description: Transaction date
+      - name: status
+        description: Payment status
+
+  - name: fact_receipts
+    description: Tenant payments from Yardi
+    columns:
+      - name: receipt_id
+        description: Primary key
+      - name: tenant_id
+        description: Foreign key to dim_tenant
+      - name: payment_method
+        description: Payment method
+      - name: amount
+        description: Amount received
+      - name: applied_to_artran_id
+        description: Foreign key to fact_ar_transactions
+      - name: received_date
+        description: Payment date
+
+  - name: fact_gl_transactions
+    description: General ledger transactions from Yardi
+    columns:
+      - name: gltran_id
+        description: Primary key
+      - name: glacct_id
+        description: Foreign key to dim_glacct
+      - name: property_id
+        description: Foreign key to dim_property
+      - name: entity_name
+        description: Legal entity
+      - name: debit_amount
+        description: Debit value
+      - name: credit_amount
+        description: Credit value
+      - name: date
+        description: Transaction date
+      - name: description
+        description: Transaction memo
+      - name: batch_id
+        description: Optional batch reference
+
+  - name: dim_glacct
+    description: Chart of accounts from Yardi
+    columns:
+      - name: glacct_id
+        description: Primary key
+      - name: account_number
+        description: GL account number
+      - name: account_name
+        description: Account description
+      - name: account_type
+        description: Asset, Liability, Revenue, etc.
+      - name: normal_balance
+        description: Debit or Credit
+      - name: financial_statement
+        description: P&L or Balance Sheet
+
+  - name: fact_invoices
+    description: Vendor invoices from Yardi
+    columns:
+      - name: invoice_id
+        description: Primary key
+      - name: vendor_id
+        description: Foreign key to dim_vendor
+      - name: property_id
+        description: Foreign key to dim_property
+      - name: glacct_id
+        description: Foreign key to dim_glacct
+      - name: invoice_date
+        description: Invoice date
+      - name: due_date
+        description: Due date
+      - name: amount
+        description: Invoice total
+      - name: status
+        description: Payment status
+      - name: payment_id
+        description: Foreign key to fact_check_register
+
+  - name: fact_check_register
+    description: Payment register from Yardi
+    columns:
+      - name: payment_id
+        description: Primary key
+      - name: check_number
+        description: Check/ACH number
+      - name: bank_account_id
+        description: Foreign key to dim_bank_account
+      - name: amount
+        description: Payment amount
+      - name: cleared_date
+        description: Clearing date
+      - name: status
+        description: Payment status
+
+  - name: dim_vendor
+    description: Vendors from Yardi or QBO
+    columns:
+      - name: vendor_id
+        description: Primary key
+      - name: name
+        description: Vendor name
+      - name: category
+        description: Category of service
+      - name: preferred_terms
+        description: Payment terms
+
+  - name: fact_budget_line
+    description: Budget lines from Yardi
+    columns:
+      - name: budget_line_id
+        description: Primary key
+      - name: budget_id
+        description: Foreign key to dim_budget_header
+      - name: property_id
+        description: Foreign key to dim_property
+      - name: glacct_id
+        description: Foreign key to dim_glacct
+      - name: period
+        description: Period (YYYY-MM)
+      - name: forecasted_amount
+        description: Budgeted value
+
+  - name: dim_budget_header
+    description: Budget scenarios from Yardi
+    columns:
+      - name: budget_id
+        description: Primary key
+      - name: scenario_name
+        description: Budget scenario label
+      - name: created_by
+        description: Author
+      - name: created_date
+        description: Creation date
+
+  # ---------------- BANKING ----------------
+  - name: dim_bank_account
+    description: Bank accounts metadata
+    columns:
+      - name: bank_account_id
+        description: Primary key
+      - name: bank_name
+        description: Bank name
+      - name: account_number_last4
+        description: Last 4 of account
+      - name: entity_name
+        description: Owning entity
+      - name: account_type
+        description: Operating, CapEx, etc.
+      - name: currency
+        description: USD, CAD, etc.
+
+  - name: fact_bank_transactions
+    description: Bank transactions from BoA/WF
+    columns:
+      - name: transaction_id
+        description: Primary key
+      - name: bank_account_id
+        description: Foreign key to dim_bank_account
+      - name: property_id
+        description: Foreign key to dim_property
+      - name: date
+        description: Transaction date
+      - name: amount
+        description: Transaction amount
+      - name: transaction_type
+        description: ACH, wire, etc.
+      - name: memo
+        description: Transaction memo
+      - name: reconciled
+        description: Reconciliation status
+
+  # ---------------- QUICKBOOKS ONLINE (QBO) ----------------
+  - name: qbo_customers
+    description: Customer accounts from QuickBooks Online
+    columns:
+      - name: customer_id
+        description: Primary key
+      - name: name
+        description: Customer name
+      - name: email
+        description: Email address
+      - name: created_date
+        description: Date the customer was added
+
+  - name: qbo_invoices
+    description: Customer invoices from QBO
+    columns:
+      - name: invoice_id
+        description: Primary key
+      - name: customer_id
+        description: Foreign key to qbo_customers
+      - name: amount
+        description: Total invoice amount
+      - name: status
+        description: Invoice status (Paid, Open, etc.)
+      - name: date
+        description: Invoice issue date
+
+  - name: qbo_payments
+    description: Payments received from customers in QBO
+    columns:
+      - name: payment_id
+        description: Primary key
+      - name: invoice_id
+        description: Foreign key to qbo_invoices
+      - name: amount
+        description: Payment amount
+      - name: date
+        description: Payment date
+
+  - name: qbo_chart_of_accounts
+    description: Chart of accounts in QBO
+    columns:
+      - name: account_id
+        description: Primary key
+      - name: name
+        description: Account name
+      - name: type
+        description: Account type (Expense, Revenue, etc.)
+      - name: number
+        description: Account number
+
+  - name: qbo_journal_entries
+    description: Journal entries in QBO
+    columns:
+      - name: journal_id
+        description: Primary key
+      - name: account_id
+        description: Foreign key to qbo_chart_of_accounts
+      - name: amount
+        description: Entry amount
+      - name: memo
+        description: Entry description
+      - name: date
+        description: Entry date
+
+  - name: qbo_employees
+    description: Employees listed in QBO
+    columns:
+      - name: employee_id
+        description: Primary key
+      - name: name
+        description: Employee name
+      - name: title
+        description: Job title
+      - name: hire_date
+        description: Date of hire
+
+  - name: qbo_vendors
+    description: Vendors tracked in QBO
+    columns:
+      - name: vendor_id
+        description: Primary key
+      - name: name
+        description: Vendor name
+      - name: category
+        description: Category of vendor
+      - name: payment_terms
+        description: Vendor payment terms

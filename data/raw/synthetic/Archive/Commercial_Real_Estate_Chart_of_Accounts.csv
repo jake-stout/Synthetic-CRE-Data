@@ -1,0 +1,39 @@
+Account Number,Account Name,Account Type,Normal Balance
+10000,Cash - Operating Account,Asset,Debit
+10010,Cash - Reserve Account,Asset,Debit
+10020,Accounts Receivable - Tenants,Asset,Debit
+10030,Prepaid Expenses,Asset,Debit
+10040,Security Deposits Held,Asset,Debit
+10100,Land,Asset,Debit
+10110,Buildings,Asset,Debit
+10120,Building Improvements,Asset,Debit
+10130,Land Improvements,Asset,Debit
+10140,"Furniture, Fixtures & Equipment (FF&E)",Asset,Debit
+10150,Accumulated Depreciation,Asset,Credit
+20000,Accounts Payable,Liability,Credit
+20010,Accrued Expenses,Liability,Credit
+20020,Mortgages Payable,Liability,Credit
+20030,Property Taxes Payable,Liability,Credit
+20040,Security Deposits Payable,Liability,Credit
+20050,Unearned Rent Income,Liability,Credit
+30000,Owner's Equity / Capital Contribution,Equity,Credit
+30010,Retained Earnings,Equity,Credit
+30020,Distributions / Draws,Equity,Debit
+40000,Rental Income,Revenue,Credit
+40010,CAM Reimbursements,Revenue,Credit
+40020,Parking Income,Revenue,Credit
+40030,Vending / Other Miscellaneous Income,Revenue,Credit
+40040,Lease Termination Fees,Revenue,Credit
+50000,Property Taxes,Expense,Debit
+50010,Insurance,Expense,Debit
+50020,Property Management Fees,Expense,Debit
+50030,Utilities,Expense,Debit
+50040,Repairs & Maintenance,Expense,Debit
+50050,Landscaping & Grounds,Expense,Debit
+50060,Janitorial Services,Expense,Debit
+50070,Legal & Professional Fees,Expense,Debit
+50080,Marketing & Advertising,Expense,Debit
+50090,Office Supplies & Admin,Expense,Debit
+50100,Bank Fees,Expense,Debit
+50110,Interest Expense,Expense,Debit
+50120,Depreciation Expense,Expense,Debit

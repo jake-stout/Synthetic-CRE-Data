@@ -1,0 +1,117 @@
+acct_number,acct_name,acct_class,acct_type,normal_balance,fin_stmt,is_cash_acct,is_reserve_acct,subgroup
+10110,cash - operating account,asset,cash,debit,balance sheet,1,1,101
+10115,cash - reserve account,asset,cash,debit,balance sheet,1,0,101
+10120,cash - security deposits,asset,cash,debit,balance sheet,0,1,101
+10125,cash - escrow,asset,cash,debit,balance sheet,0,0,101
+10130,restricted cash - lender reserves,asset,cash,debit,balance sheet,0,1,101
+10135,unapplied cash payment income,asset,cash,debit,balance sheet,0,0,101
+10210,accounts receivable,asset,ar,debit,balance sheet,0,0,102
+10215,intercompany notes receivable,asset,ar,debit,balance sheet,0,0,102
+10220,rents receivable,asset,ar,debit,balance sheet,0,0,102
+10310,prepaid expenses,asset,prepaid expense,debit,balance sheet,0,0,103
+10410,inventory,asset,inventory,debit,balance sheet,0,0,104
+10510,"furniture, fixtures & equipment (ff&e)",asset,fixed assets,debit,balance sheet,0,0,105
+10515,buildings,asset,fixed assets,debit,balance sheet,0,0,105
+10520,building improvements,asset,fixed assets,debit,balance sheet,0,0,105
+10525,land,asset,fixed assets,debit,balance sheet,0,0,105
+10530,land improvements,asset,fixed assets,debit,balance sheet,0,0,105
+10535,landscaping & grounds,asset,fixed assets,debit,balance sheet,0,0,105
+10540,capital improvements,asset,fixed assets,debit,balance sheet,0,0,105
+10545,property improvements,asset,fixed assets,debit,balance sheet,0,0,105
+10550,accumulated depreciation,asset,fixed assets,debit,balance sheet,0,0,105
+10910,uncategorized assets,asset,other,debit,balance sheet,0,0,109
+10915,undeposited fund,asset,other,debit,balance sheet,0,0,109
+20110,accounts payable,liability,ap,credit,balance sheet,0,0,201
+20115,accounts payable - vendors,liability,ap,credit,balance sheet,0,0,201
+20120,intercompany notes payable,liability,ap,credit,balance sheet,0,0,201
+20125,loan payable,liability,ap,credit,balance sheet,0,0,201
+20130,mortgages payable,liability,ap,credit,balance sheet,0,0,201
+20135,notes payable,liability,ap,credit,balance sheet,0,0,201
+20140,notes payable interest expense,liability,ap,credit,balance sheet,0,0,201
+20145,payroll liabilities,liability,ap,credit,balance sheet,0,0,201
+20150,property taxes payable,liability,ap,credit,balance sheet,0,0,201
+20155,security deposits payable,liability,ap,credit,balance sheet,0,0,201
+20310,tenant prepayments,liability,other,credit,balance sheet,0,0,203
+20315,unearned rent income,liability,other,credit,balance sheet,0,0,203
+30110,distributions / draws,equity,equity,credit,balance sheet,0,0,301
+30115,equity accounts,equity,equity,credit,balance sheet,0,0,301
+30120,owner's equity / capital contribution,equity,equity,credit,balance sheet,0,0,301
+30125,retained earnings,equity,equity,credit,balance sheet,0,0,301
+40110,cam & recovery income,revenue,income,credit,income statement,0,0,401
+40115,commission income,revenue,income,credit,income statement,0,0,401
+40120,interest income,revenue,income,credit,income statement,0,0,401
+40125,late fee income,revenue,income,credit,income statement,0,0,401
+40130,other income,revenue,income,credit,income statement,0,0,401
+40135,parking income,revenue,income,credit,income statement,0,0,401
+40140,rental income,revenue,income,credit,income statement,0,0,401
+40145,services income,revenue,income,credit,income statement,0,0,401
+40150,property management income,revenue,income,credit,income statement,0,0,401
+40910,uncategorized income,revenue,other,credit,income statement,0,0,401
+40915,vending / other miscellaneous income,revenue,other,credit,income statement,0,0,401
+50105,accrued expenses,expense,operating,debit,income statement,0,0,501
+50110,broker fees,expense,operating,debit,income statement,0,0,501
+50115,facility management,expense,operating,debit,income statement,0,0,501
+50120,grounds maintenance,expense,operating,debit,income statement,0,0,501
+50125,leasing commissions,expense,operating,debit,income statement,0,0,501
+50130,project management fees,expense,operating,debit,income statement,0,0,501
+50135,property management fees,expense,operating,debit,income statement,0,0,501
+50140,tenant acquisition costs,expense,operating,debit,income statement,0,0,501
+50210,maintenance & repairs,expense,operating,debit,income statement,0,0,502
+50215,utilities,expense,operating,debit,income statement,0,0,502
+50220,surveillance monitoring,expense,operating,debit,income statement,0,0,502
+50225,onsite services,expense,operating,debit,income statement,0,0,502
+50230,exterior services,expense,operating,debit,income statement,0,0,502
+50235,janitorial services,expense,operating,debit,income statement,0,0,502
+50240,security services,expense,operating,debit,income statement,0,0,502
+50245,tenant reimbursements,expense,operating,debit,income statement,0,0,502
+50250,lease termination fees,expense,operating,debit,income statement,0,0,502
+50310,insurance expense,expense,operating,debit,income statement,0,0,503
+50315,property taxes,expense,operating,debit,income statement,0,0,503
+50320,real estate taxes,expense,operating,debit,income statement,0,0,503
+50410,closing costs,expense,operating,debit,income statement,0,0,504
+50415,due diligence costs,expense,operating,debit,income statement,0,0,504
+60110,marketing & advertising,expense,overhead,debit,income statement,0,0,601
+60115,communications expense,expense,overhead,debit,income statement,0,0,601
+60120,software subscriptions,expense,overhead,debit,income statement,0,0,601
+60125,office supplies & admin,expense,overhead,debit,income statement,0,0,601
+60210,appraisal fees,expense,overhead,debit,income statement,0,0,602
+60215,architectural fees,expense,overhead,debit,income statement,0,0,602
+60220,design consulting,expense,overhead,debit,income statement,0,0,602
+60225,engineering fees,expense,overhead,debit,income statement,0,0,602
+60230,zoning consulting,expense,overhead,debit,income statement,0,0,602
+60235,construction costs,expense,overhead,debit,income statement,0,0,602
+60240,construction management,expense,overhead,debit,income statement,0,0,602
+60245,predevelopment costs,expense,overhead,debit,income statement,0,0,602
+60250,permitting fees,expense,overhead,debit,income statement,0,0,602
+60255,environmental remediation,expense,overhead,debit,income statement,0,0,602
+60260,environmental studies,expense,overhead,debit,income statement,0,0,602
+60265,entitlement costs,expense,overhead,debit,income statement,0,0,602
+60310,it services,expense,overhead,debit,income statement,0,0,603
+60315,technology expense,expense,overhead,debit,income statement,0,0,603
+60320,technology services,expense,overhead,debit,income statement,0,0,603
+60325,infrastructure consulting,expense,overhead,debit,income statement,0,0,603
+60410,green building expense,expense,overhead,debit,income statement,0,0,604
+60415,sustainability consulting,expense,overhead,debit,income statement,0,0,604
+60420,esg strategy services,expense,overhead,debit,income statement,0,0,604
+60510,accounting fees,expense,overhead,debit,income statement,0,0,605
+60515,tax preparation fees,expense,overhead,debit,income statement,0,0,605
+60520,consulting services,expense,overhead,debit,income statement,0,0,605
+60525,compliance services,expense,overhead,debit,income statement,0,0,605
+60530,professional services,expense,overhead,debit,income statement,0,0,605
+60610,bank fees,expense,overhead,debit,income statement,0,0,606
+60615,legal fees,expense,overhead,debit,income statement,0,0,606
+60620,title fees,expense,overhead,debit,income statement,0,0,606
+60710,asset management,expense,overhead,debit,income statement,0,0,607
+60715,financial consulting,expense,overhead,debit,income statement,0,0,607
+60720,investor relations,expense,overhead,debit,income statement,0,0,607
+60810,data subscriptions,expense,overhead,debit,income statement,0,0,608
+60815,market research,expense,overhead,debit,income statement,0,0,608
+80110,interest expense,expense,debt service,debit,income statement,0,0,801
+80115,notes payable interest expense,expense,debt service,debit,income statement,0,0,801
+80120,insurance proceeds received,expense,debt service,debit,income statement,0,0,801
+90120,capital gains/losses,expense,other,debit,income statement,0,0,901
+90125,depreciation expense,expense,other,debit,income statement,0,0,901
+90130,charitable contributions/gifts,expense,other,debit,income statement,0,0,901
+90135,reconciliation discrepancies,expense,other,debit,income statement,0,0,901
+90140,other expenses,expense,other,debit,income statement,0,0,901
+99999,ask my accountant,expense,other,debit,income statement,0,0,999

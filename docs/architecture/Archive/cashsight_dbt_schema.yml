@@ -1,0 +1,250 @@
+version: 2
+
+models:
+  - name: fact_bank_transactions
+    description: Bank inflows and outflows from BoA and Wells Fargo accounts
+    columns:
+      - name: transaction_id
+        description: Unique transaction ID
+      - name: bank_account_id
+        description: Foreign key to dim_bank_account
+      - name: property_id
+        description: Foreign key to dim_property
+      - name: date
+        description: Date of the transaction
+      - name: amount
+        description: Transaction amount
+      - name: transaction_type
+        description: Type of transaction (ACH, wire, check, etc.)
+      - name: memo
+        description: Free-text memo for transaction
+      - name: reconciled
+        description: Whether the transaction has been reconciled
+
+  - name: dim_bank_account
+    description: Bank account details by entity
+    columns:
+      - name: bank_account_id
+        description: Primary key
+      - name: bank_name
+        description: Bank name (e.g. BoA, WF)
+      - name: account_number_last4
+        description: Redacted last 4 digits of account
+      - name: entity_name
+        description: Legal entity name
+      - name: account_type
+        description: Operating, CapEx, Security Deposit
+      - name: currency
+        description: Currency (USD, CAD, etc.)
+
+  - name: fact_gl_transactions
+    description: General ledger transactions
+    columns:
+      - name: gltran_id
+        description: Transaction ID
+      - name: glacct_id
+        description: Foreign key to dim_glacct
+      - name: property_id
+        description: Foreign key to dim_property
+      - name: entity_name
+        description: Legal entity name
+      - name: debit_amount
+        description: Debit amount
+      - name: credit_amount
+        description: Credit amount
+      - name: date
+        description: Date of transaction
+      - name: description
+        description: Memo or reference
+      - name: batch_id
+        description: Optional batch control ID
+
+  - name: dim_glacct
+    description: Chart of accounts metadata
+    columns:
+      - name: glacct_id
+        description: Primary key
+      - name: account_number
+        description: GL account number
+      - name: account_name
+        description: GL account name
+      - name: account_type
+        description: Asset, Liability, Expense, Revenue
+      - name: normal_balance
+        description: Debit or Credit
+      - name: financial_statement
+        description: P&L or Balance Sheet
+
+  - name: fact_invoices
+    description: Accounts payable invoices
+    columns:
+      - name: invoice_id
+        description: Primary key
+      - name: vendor_id
+        description: Foreign key to dim_vendor
+      - name: property_id
+        description: Foreign key to dim_property
+      - name: glacct_id
+        description: Foreign key to dim_glacct
+      - name: invoice_date
+        description: Invoice issue date
+      - name: due_date
+        description: Payment due date
+      - name: amount
+        description: Invoice total amount
+      - name: status
+        description: Invoice status
+      - name: payment_id
+        description: Foreign key to fact_check_register
+
+  - name: fact_check_register
+    description: Payments issued to vendors
+    columns:
+      - name: payment_id
+        description: Primary key
+      - name: check_number
+        description: Check or ACH number
+      - name: bank_account_id
+        description: Foreign key to dim_bank_account
+      - name: amount
+        description: Payment amount
+      - name: cleared_date
+        description: Date payment was cleared
+      - name: status
+        description: Cleared, Stale, Voided
+
+  - name: dim_vendor
+    description: Vendor master table
+    columns:
+      - name: vendor_id
+        description: Primary key
+      - name: name
+        description: Vendor name
+      - name: category
+        description: Vendor category
+      - name: preferred_terms
+        description: Payment terms
+
+  - name: fact_ar_transactions
+    description: Accounts receivable activity
+    columns:
+      - name: artran_id
+        description: Primary key
+      - name: lease_id
+        description: Foreign key to dim_lease
+      - name: charge_type
+        description: Rent, utilities, fees
+      - name: amount
+        description: Transaction amount
+      - name: date
+        description: Transaction date
+      - name: status
+        description: Open, Paid, Reversed, etc.
+
+  - name: fact_receipts
+    description: Payments received from tenants
+    columns:
+      - name: receipt_id
+        description: Primary key
+      - name: tenant_id
+        description: Foreign key to dim_tenant
+      - name: payment_method
+        description: ACH, check, credit card
+      - name: amount
+        description: Payment amount
+      - name: applied_to_artran_id
+        description: Foreign key to fact_ar_transactions
+      - name: received_date
+        description: Date payment was received
+
+  - name: dim_tenant
+    description: Tenant details
+    columns:
+      - name: tenant_id
+        description: Primary key
+      - name: name
+        description: Tenant name
+      - name: unit_id
+        description: Foreign key to dim_unit
+      - name: credit_score
+        description: Optional credit score
+      - name: contact_email
+        description: Email address
+      - name: lease_status
+        description: Active, Expired, Delinquent
+
+  - name: dim_lease
+    description: Lease agreements
+    columns:
+      - name: lease_id
+        description: Primary key
+      - name: property_id
+        description: Foreign key to dim_property
+      - name: unit_id
+        description: Foreign key to dim_unit
+      - name: start_date
+        description: Lease start date
+      - name: end_date
+        description: Lease end date
+      - name: monthly_rent
+        description: Monthly rent
+      - name: security_deposit
+        description: Deposit amount
+
+  - name: fact_budget_line
+    description: Budget line items and forecasted values
+    columns:
+      - name: budget_line_id
+        description: Primary key
+      - name: budget_id
+        description: Foreign key to dim_budget_header
+      - name: property_id
+        description: Foreign key to dim_property
+      - name: glacct_id
+        description: Foreign key to dim_glacct
+      - name: period
+        description: Monthly period YYYY-MM
+      - name: forecasted_amount
+        description: Planned value
+
+  - name: dim_budget_header
+    description: Budget version metadata
+    columns:
+      - name: budget_id
+        description: Primary key
+      - name: scenario_name
+        description: Scenario label (base, upside, etc.)
+      - name: created_by
+        description: User or system that created it
+      - name: created_date
+        description: Date created
+
+  - name: dim_property
+    description: Property master data
+    columns:
+      - name: property_id
+        description: Primary key
+      - name: name
+        description: Property name
+      - name: address
+        description: Full address
+      - name: legal_entity
+        description: Owning legal entity
+      - name: market
+        description: Geographic market
+      - name: property_type
+        description: Multifamily, retail, etc.
+
+  - name: dim_unit
+    description: Property units
+    columns:
+      - name: unit_id
+        description: Primary key
+      - name: property_id
+        description: Foreign key to dim_property
+      - name: unit_number
+        description: Unit identifier
+      - name: floorplan
+        description: Studio, 1BR, etc.
+      - name: rent_amount
+        description: Asking rent

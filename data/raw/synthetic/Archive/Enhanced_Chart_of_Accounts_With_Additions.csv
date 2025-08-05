@@ -1,0 +1,50 @@
+acct_number,acct_name,acct_type,normal_balance,fin_stmt,is_cash_acct,is_reserve_acct
+10000,Cash - Operating Account,Asset,Debit,Balance Sheet,TRUE,FALSE
+10010,Cash - Reserve Account,Asset,Debit,Balance Sheet,TRUE,TRUE
+10020,Accounts Receivable - Tenants,Asset,Debit,Balance Sheet,FALSE,FALSE
+10030,Prepaid Expenses,Asset,Debit,Balance Sheet,FALSE,FALSE
+10040,Security Deposits Held,Asset,Debit,Balance Sheet,FALSE,FALSE
+10100,Land,Asset,Debit,Balance Sheet,FALSE,FALSE
+10110,Buildings,Asset,Debit,Balance Sheet,FALSE,FALSE
+10120,Building Improvements,Asset,Debit,Balance Sheet,FALSE,FALSE
+10130,Land Improvements,Asset,Debit,Balance Sheet,FALSE,FALSE
+10140,"Furniture, Fixtures & Equipment (FF&E)",Asset,Debit,Balance Sheet,FALSE,FALSE
+10150,Accumulated Depreciation,Asset,Credit,Balance Sheet,FALSE,FALSE
+20000,Accounts Payable,Liability,Credit,Balance Sheet,FALSE,FALSE
+20010,Accrued Expenses,Liability,Credit,Balance Sheet,FALSE,FALSE
+20020,Mortgages Payable,Liability,Credit,Balance Sheet,FALSE,FALSE
+20030,Property Taxes Payable,Liability,Credit,Balance Sheet,FALSE,FALSE
+20040,Security Deposits Payable,Liability,Credit,Balance Sheet,FALSE,FALSE
+20050,Unearned Rent Income,Liability,Credit,Balance Sheet,FALSE,FALSE
+30000,Owner's Equity / Capital Contribution,Equity,Credit,Balance Sheet,FALSE,FALSE
+30010,Retained Earnings,Equity,Credit,Balance Sheet,FALSE,FALSE
+30020,Distributions / Draws,Equity,Debit,Balance Sheet,FALSE,FALSE
+40000,Rental Income,Revenue,Credit,P&L,FALSE,FALSE
+40010,CAM Reimbursements,Revenue,Credit,P&L,FALSE,FALSE
+40020,Parking Income,Revenue,Credit,P&L,FALSE,FALSE
+40030,Vending / Other Miscellaneous Income,Revenue,Credit,P&L,FALSE,FALSE
+40040,Lease Termination Fees,Revenue,Credit,P&L,FALSE,FALSE
+50000,Property Taxes,Expense,Debit,P&L,FALSE,FALSE
+50010,Insurance,Expense,Debit,P&L,FALSE,FALSE
+50020,Property Management Fees,Expense,Debit,P&L,FALSE,FALSE
+50030,Utilities,Expense,Debit,P&L,FALSE,FALSE
+50040,Repairs & Maintenance,Expense,Debit,P&L,FALSE,FALSE
+50050,Landscaping & Grounds,Expense,Debit,P&L,FALSE,FALSE
+50060,Janitorial Services,Expense,Debit,P&L,FALSE,FALSE
+50070,Legal & Professional Fees,Expense,Debit,P&L,FALSE,FALSE
+50080,Marketing & Advertising,Expense,Debit,P&L,FALSE,FALSE
+50090,Office Supplies & Admin,Expense,Debit,P&L,FALSE,FALSE
+50100,Bank Fees,Expense,Debit,P&L,FALSE,FALSE
+50110,Interest Expense,Expense,Debit,P&L,FALSE,FALSE
+50120,Depreciation Expense,Expense,Debit,P&L,FALSE,FALSE
+10100,Cash - Security Deposits,Asset,Debit,Balance Sheet,TRUE,FALSE
+10110,Restricted Cash - Lender Reserves,Asset,Debit,Balance Sheet,TRUE,TRUE
+20000,Accounts Payable - Vendors,Liability,Credit,Balance Sheet,FALSE,FALSE
+20020,Tenant Prepayments,Liability,Credit,Balance Sheet,FALSE,FALSE
+40010,Tenant Reimbursements,Revenue,Credit,P&L,FALSE,FALSE
+40020,Late Fee Income,Revenue,Credit,P&L,FALSE,FALSE
+50000,Repairs and Maintenance,Expense,Debit,P&L,FALSE,FALSE
+50040,Real Estate Taxes,Expense,Debit,P&L,FALSE,FALSE
+50060,Landscaping,Expense,Debit,P&L,FALSE,FALSE
+50070,Security Services,Expense,Debit,P&L,FALSE,FALSE
+51000,Capital Improvements,Expense,Debit,P&L,FALSE,FALSE
