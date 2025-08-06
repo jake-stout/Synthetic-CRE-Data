@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 DB_USER = "postgres"
 DB_PASS = "postgres"
 DB_HOST = "localhost"
-DB_PORT = 5432
+DB_PORT = 54322
 DB_NAME = "postgres"
 
 # Create SQLAlchemy engine
