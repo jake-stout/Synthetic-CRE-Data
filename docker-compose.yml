@@ -34,11 +34,23 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       POSTGRES_DB: ${POSTGRES_DB:-postgres}
     ports:
-      - "54322:54322"
+      - "54322:5432"
     networks:
       - cashsight-net
     volumes:
       - pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - cre-db
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin@example.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+    ports:
+      - "5050:80"
+    networks:
+      - cashsight-net
 
   jobmanager:
     image: flink:1.17.1-scala_2.12-java11
@@ -46,8 +58,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      - |
-        FLINK_PROPERTIES=jobmanager.rpc.address: jobmanager
+      FLINK_PROPERTIES: "jobmanager.rpc.address: jobmanager"
     networks:
       - cashsight-net
 
@@ -57,8 +68,7 @@ services:
       - jobmanager
     command: taskmanager
     environment:
-      - |
-        FLINK_PROPERTIES=jobmanager.rpc.address: jobmanager
+      FLINK_PROPERTIES: "jobmanager.rpc.address: jobmanager"
     networks:
       - cashsight-net
 
