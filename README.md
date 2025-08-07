@@ -52,6 +52,13 @@ Stop the containers when you are done:
 docker compose down
 ```
 
+### Flink job image base
+
+The image built from `flink_jobs/Dockerfile` now relies on a multi-stage build
+that pulls Python 3.7 from the official `python:3.7-slim` image and combines it
+with the `flink:1.16.2` tooling. Ensure these base images are available locally
+when building the Flink job container.
+
 ### Run tests
 
 Use `pytest` to run the unit tests:
