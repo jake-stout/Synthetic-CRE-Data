@@ -2,12 +2,12 @@ import os
 import pandas as pd
 from sqlalchemy import create_engine
 
-# Define connection parameters from your .env
-DB_USER = "postgres"
-DB_PASS = "postgres"
-DB_HOST = "localhost"
-DB_PORT = 54322
-DB_NAME = "postgres"
+# Define connection parameters from environment variables with defaults
+DB_USER = os.getenv("DB_USER", "postgres")
+DB_PASS = os.getenv("DB_PASS", "postgres")
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_PORT = os.getenv("DB_PORT", "54322")
+DB_NAME = os.getenv("DB_NAME", "postgres")
 
 # Create SQLAlchemy engine
 engine = create_engine(f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}")
