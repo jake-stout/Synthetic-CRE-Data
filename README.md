@@ -22,9 +22,15 @@ python scripts/create_synthetic_sample_data.py
 
 ### Load data into PostgreSQL
 
-Update the connection parameters at the top of `load_to_postgres.py` to match your environment and execute:
+Set the following environment variables to configure the database connection
+(defaults shown) and then run the loader:
 
 ```bash
+export DB_USER=postgres
+export DB_PASS=postgres
+export DB_HOST=localhost
+export DB_PORT=54322
+export DB_NAME=postgres
 python scripts/load_to_postgres.py
 ```
 
