@@ -8,6 +8,5 @@ kafka-python>=2.0.2
 fastapi>=0.100.0
 uvicorn[standard]>=0.22.0
 requests>=2.31.0
-apache-flink==1.16.2
 pytest>=7.0.0
 
