@@ -5,34 +5,6 @@ import json
 import requests
 from pyflink.table import EnvironmentSettings, DataTypes, TableEnvironment, StreamTableEnvironment
 
-def create_processed_events_sink_kafka(t_env):
-    table_name = "process_events_kafka"
-    kafka_key = os.environ.get("KAFKA_WEB_TRAFFIC_KEY", "")
-    kafka_secret = os.environ.get("KAFKA_WEB_TRAFFIC_SECRET", "")
-    sasl_config = f'org.apache.kafka.common.security.plain.PlainLoginModule required username="{kafka_key}" password="{kafka_secret}";'
-    sink_ddl = f"""
-        CREATE TABLE {table_name} (
-            ip VARCHAR,
-            event_timestamp VARCHAR,
-            referrer VARCHAR,
-            host VARCHAR,
-            url VARCHAR,
-            geodata VARCHAR
-        ) WITH (
-            'connector' = 'kafka',
-            'properties.bootstrap.servers' = '{os.environ.get('KAFKA_URL')}',
-            'topic' = '{os.environ.get('KAFKA_GROUP').split('.')[0] + '.' + table_name}',
-            'properties.ssl.endpoint.identification.algorithm' = '',
-            'properties.group.id' = '{os.environ.get('KAFKA_GROUP')}',
-            'properties.security.protocol' = 'SASL_SSL',
-            'properties.sasl.jaas.config' = '{sasl_config}',
-            'format' = 'json'
-        );
-        """
-    print(sink_ddl)
-    t_env.execute_sql(sink_ddl)
-    return table_name
-
 
 def create_processed_events_sink_postgres(t_env):
     table_name = 'processed_events'
@@ -82,8 +54,6 @@ get_location = udf(GetLocation(), result_type=DataTypes.STRING())
 
 
 def create_events_source_kafka(t_env):
-    kafka_key = os.environ.get("KAFKA_WEB_TRAFFIC_KEY", "")
-    kafka_secret = os.environ.get("KAFKA_WEB_TRAFFIC_SECRET", "")
     table_name = "events"
     pattern = "yyyy-MM-dd''T''HH:mm:ss.SSS''Z''"
     source_ddl = f"""
@@ -101,9 +71,6 @@ def create_events_source_kafka(t_env):
             'properties.bootstrap.servers' = '{os.environ.get('KAFKA_URL')}',
             'topic' = '{os.environ.get('KAFKA_TOPIC')}',
             'properties.group.id' = '{os.environ.get('KAFKA_GROUP')}',
-            'properties.security.protocol' = 'SASL_SSL',
-            'properties.sasl.mechanism' = 'PLAIN',
-            'properties.sasl.jaas.config' = 'org.apache.flink.kafka.shaded.org.apache.kafka.common.security.plain.PlainLoginModule required username=\"{kafka_key}\" password=\"{kafka_secret}\";',
             'scan.startup.mode' = 'latest-offset',
             'properties.auto.offset.reset' = 'latest',
             'format' = 'json'

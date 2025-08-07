@@ -1,6 +1,6 @@
-# CashSight
+# Synthetic CRE Data
 
-CashSight provides tools for generating synthetic property management data and loading it into a local PostgreSQL instance. It can be useful for demos or analytics testing.
+Utilities for generating synthetic commercial real estate (CRE) data, loading it into PostgreSQL, and running simple streaming jobs with Apache Flink. These scripts are useful for demos or analytics testing.
 
 ## Prerequisites
 
@@ -9,8 +9,6 @@ Install the required Python packages:
 ```bash
 pip install -r requirements.txt
 ```
-
-Key packages include `pandas`, `openpyxl`, `faker`, `sqlalchemy`, `psycopg2-binary` and `python-dotenv`.
 
 ## Usage
 
@@ -32,23 +30,20 @@ python scripts/load_to_postgres.py
 
 This reads the generated CSVs and loads them into the specified database.
 
-### Create a fake SQLite database
+### Run PostgreSQL, Kafka, and Flink with Docker
 
-If you just want a lightweight demo database, run:
-
-```bash
-python cashsight/db/init_fake_db.py
-```
-
-This will create `data/fake_cashsight.db` populated with the sample CSV data.
-
-### Run PostgreSQL with Docker
-
-To spin up a local PostgreSQL instance and pgAdmin using Docker Compose, first
-update the connection settings in `.env` if needed. Then start the services:
+The repository includes a `docker-compose.yml` that starts PostgreSQL, Kafka, and a Flink cluster for local testing:
 
 ```bash
 docker compose up -d
+```
+
+Use the make targets in `flink_jobs/Makefile` to submit the streaming jobs:
+
+```bash
+cd flink_jobs
+make job        # start the ingestion job
+make aggregation_job
 ```
 
 Stop the containers when you are done:
