@@ -10,6 +10,10 @@ Install the required Python packages:
 pip install -r requirements.txt
 ```
 
+Flink and its Python dependencies are installed separately inside the
+Flink Docker image (see the `flink_jobs` directory) and therefore are
+not included in the main `requirements.txt`.
+
 ## Usage
 
 ### Generate sample data
