@@ -7,3 +7,18 @@ CREATE TABLE IF NOT EXISTS processed_events (
     url VARCHAR,
     geodata VARCHAR
 );
+
+-- Aggregate events by host
+CREATE TABLE IF NOT EXISTS processed_events_aggregated (
+    event_hour TIMESTAMP(3),
+    host VARCHAR,
+    num_hits BIGINT
+);
+
+-- Aggregate events by host and referrer
+CREATE TABLE IF NOT EXISTS processed_events_aggregated_source (
+    event_hour TIMESTAMP(3),
+    host VARCHAR,
+    referrer VARCHAR,
+    num_hits BIGINT
+);

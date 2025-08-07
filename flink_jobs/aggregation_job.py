@@ -46,8 +46,6 @@ def create_aggregated_events_referrer_sink_postgres(t_env):
     return table_name
 
 def create_processed_events_source_kafka(t_env):
-    kafka_key = os.environ.get("KAFKA_WEB_TRAFFIC_KEY", "")
-    kafka_secret = os.environ.get("KAFKA_WEB_TRAFFIC_SECRET", "")
     table_name = "process_events_kafka"
     pattern = "yyyy-MM-dd''T''HH:mm:ss.SSS''Z''"
     sink_ddl = f"""
@@ -61,13 +59,10 @@ def create_processed_events_source_kafka(t_env):
             window_timestamp AS TO_TIMESTAMP(event_time, '{pattern}'),
             WATERMARK FOR window_timestamp AS window_timestamp - INTERVAL '15' SECOND
         ) WITH (
-             'connector' = 'kafka',
+            'connector' = 'kafka',
             'properties.bootstrap.servers' = '{os.environ.get('KAFKA_URL')}',
             'topic' = '{os.environ.get('KAFKA_TOPIC')}',
             'properties.group.id' = '{os.environ.get('KAFKA_GROUP')}',
-            'properties.security.protocol' = 'SASL_SSL',
-            'properties.sasl.mechanism' = 'PLAIN',
-            'properties.sasl.jaas.config' = 'org.apache.flink.kafka.shaded.org.apache.kafka.common.security.plain.PlainLoginModule required username=\"{kafka_key}\" password=\"{kafka_secret}\";',
             'scan.startup.mode' = 'latest-offset',
             'properties.auto.offset.reset' = 'latest',
             'format' = 'json'
